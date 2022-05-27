@@ -1,0 +1,56 @@
+{% extends '_base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-sm-12 col-md-3 col-lg-4"></div>
+    <div class="col-sm-12 col-md-3 col-lg-4">
+        <div class="d-flex justify-content-between">
+            <div>
+                <div class="form-group">
+                    <select class="form-select">
+                        <option>January</option>
+                        <option>February</option>
+                        <option>March</option>
+                        <option>April</option>
+                        <option>May</option>
+                        <option>June</option>
+                        <option>July</option>
+                        <option>August</option>
+                        <option>September</option>
+                        <option>October</option>
+                        <option>November</option>
+                        <option>December</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <a href="{% url 'transaction-create' %}" class="btn btn-success">Add Transaction</a>
+            </div>
+        </div>
+        {% for tran in object_list %}
+        <div class="card">
+            <div class="card-body pb-1">
+                <div class="d-flex">
+                    <div class="flex-shrink-0">
+                        <div class="cat-icon">{{ tran.category.title|slice:1 }}</div>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h6>{{ tran.title }}</h6>
+                        <p><small>{{ tran.transaction_date }}</small></p>
+                    </div>
+                    <div class="flex-grow-2 ms-3">
+                        <h6 class="{% if tran.transaction_type == 'IN' %}text-success{% else %}text-danger{% endif %}">
+                            Rs. {{ tran.amount }}</h6>
+                        <p style="font-size: 12px">{{tran.get_transaction_mode|upper}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <br><br><br><br>
+        <p class="text-center">No transactions yet!</p>
+        {% endfor %}
+    </div>
+    <div class="col-sm-12 col-md-3 col-lg-4"></div>
+</div>
+{% endblock %}
